@@ -1,0 +1,207 @@
+{
+  "case_id": "IR-2024-002",
+  "incident_type": "suspected_insider_threat",
+  "artifacts": {
+    "process_tree": [
+      {
+        "timestamp": "2024-02-20T22:05:12Z",
+        "pid": 8844,
+        "parent_pid": 4120,
+        "process_name": "explorer.exe",
+        "command_line": "C:\\Windows\\explorer.exe /n,\\\\fileserver\\HR\\employee_records",
+        "user": "CORP\\jdoe"
+      },
+      {
+        "timestamp": "2024-02-20T22:18:45Z",
+        "pid": 9102,
+        "parent_pid": 8844,
+        "process_name": "7z.exe",
+        "command_line": "\"C:\\Program Files\\7-Zip\\7z.exe\" a -mx9 C:\\Users\\jdoe\\Documents\\backup_20240220.7z \\\\fileserver\\HR\\employee_records\\*.xlsx \\\\fileserver\\Finance\\Q4_reports\\*.pdf \\\\fileserver\\Finance\\payroll_2024.xlsx",
+        "user": "CORP\\jdoe"
+      },
+      {
+        "timestamp": "2024-02-20T22:42:30Z",
+        "pid": 9456,
+        "parent_pid": 1024,
+        "process_name": "chrome.exe",
+        "command_line": "\"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe\" --upload-file=C:\\Users\\jdoe\\Documents\\backup_20240220.7z",
+        "user": "CORP\\jdoe"
+      },
+      {
+        "timestamp": "2024-02-20T22:00:03Z",
+        "pid": 6200,
+        "parent_pid": 812,
+        "process_name": "svchost.exe",
+        "command_line": "C:\\Windows\\System32\\svchost.exe -k netsvcs -p -s wuauserv",
+        "user": "NT AUTHORITY\\SYSTEM"
+      },
+      {
+        "timestamp": "2024-02-20T22:01:15Z",
+        "pid": 6344,
+        "parent_pid": 6200,
+        "process_name": "TiWorker.exe",
+        "command_line": "C:\\Windows\\WinSxS\\amd64_microsoft-windows-servicingstack\\TiWorker.exe -Embedding",
+        "user": "NT AUTHORITY\\SYSTEM"
+      }
+    ],
+    "network_logs": [
+      {
+        "timestamp": "2024-02-20T22:43:01Z",
+        "src_ip": "10.0.2.88",
+        "dst_ip": "142.250.80.46",
+        "dst_port": 443,
+        "protocol": "HTTPS",
+        "bytes_sent": 58720256,
+        "domain": "drive.google.com"
+      },
+      {
+        "timestamp": "2024-02-20T22:40:15Z",
+        "src_ip": "10.0.2.88",
+        "dst_ip": "209.85.233.26",
+        "dst_port": 443,
+        "protocol": "HTTPS",
+        "bytes_sent": 1024,
+        "domain": "mail.google.com"
+      },
+      {
+        "timestamp": "2024-02-20T21:55:00Z",
+        "src_ip": "10.0.2.88",
+        "dst_ip": "198.51.100.10",
+        "dst_port": 443,
+        "protocol": "HTTPS",
+        "bytes_sent": 2048,
+        "domain": "vpn.corpnet.com"
+      },
+      {
+        "timestamp": "2024-02-20T22:04:33Z",
+        "src_ip": "10.0.2.88",
+        "dst_ip": "10.0.1.5",
+        "dst_port": 445,
+        "protocol": "SMB",
+        "bytes_sent": 512,
+        "domain": "fileserver.corp.local"
+      },
+      {
+        "timestamp": "2024-02-20T22:01:45Z",
+        "src_ip": "10.0.2.88",
+        "dst_ip": "13.107.42.14",
+        "dst_port": 443,
+        "protocol": "HTTPS",
+        "bytes_sent": 4096,
+        "domain": "onedrive.live.com"
+      }
+    ],
+    "file_events": [
+      {
+        "timestamp": "2024-02-20T22:06:01Z",
+        "action": "read",
+        "path": "\\\\fileserver\\HR\\employee_records\\salary_bands_2024.xlsx",
+        "size_bytes": 2457600,
+        "hash_sha256": "a3f2b8c1d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1"
+      },
+      {
+        "timestamp": "2024-02-20T22:08:44Z",
+        "action": "read",
+        "path": "\\\\fileserver\\Finance\\Q4_reports\\revenue_forecast.pdf",
+        "size_bytes": 5242880,
+        "hash_sha256": "b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3"
+      },
+      {
+        "timestamp": "2024-02-20T22:10:22Z",
+        "action": "read",
+        "path": "\\\\fileserver\\Finance\\payroll_2024.xlsx",
+        "size_bytes": 3145728,
+        "hash_sha256": "c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4"
+      },
+      {
+        "timestamp": "2024-02-20T22:19:30Z",
+        "action": "create",
+        "path": "C:\\Users\\jdoe\\Documents\\backup_20240220.7z",
+        "size_bytes": 52428800,
+        "hash_sha256": "d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5"
+      },
+      {
+        "timestamp": "2024-02-20T22:22:10Z",
+        "action": "create",
+        "path": "E:\\backup_20240220.7z",
+        "size_bytes": 52428800,
+        "hash_sha256": "d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5"
+      },
+      {
+        "timestamp": "2024-02-20T22:15:00Z",
+        "action": "modify",
+        "path": "C:\\Users\\jdoe\\Documents\\weekly_status_report.docx",
+        "size_bytes": 45056,
+        "hash_sha256": "e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6"
+      },
+      {
+        "timestamp": "2024-02-20T22:18:50Z",
+        "action": "create",
+        "path": "C:\\Users\\jdoe\\AppData\\Local\\Temp\\7zS4F2A1.tmp",
+        "size_bytes": 10485760,
+        "hash_sha256": "f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7"
+      }
+    ],
+    "registry_changes": [
+      {
+        "timestamp": "2024-02-20T22:21:55Z",
+        "action": "set_value",
+        "key": "HKLM\\SYSTEM\\CurrentControlSet\\Enum\\USBSTOR\\Disk&Ven_SanDisk&Prod_Ultra&Rev_1.00\\4C530001211217121370&0",
+        "value_name": "FriendlyName",
+        "value_data": "SanDisk Ultra USB 3.0"
+      },
+      {
+        "timestamp": "2024-02-20T22:45:02Z",
+        "action": "delete_value",
+        "key": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\RecentDocs",
+        "value_name": "MRUListEx",
+        "value_data": ""
+      },
+      {
+        "timestamp": "2024-02-20T22:21:56Z",
+        "action": "set_value",
+        "key": "HKLM\\SYSTEM\\CurrentControlSet\\Enum\\USBSTOR\\Disk&Ven_SanDisk&Prod_Ultra&Rev_1.00\\4C530001211217121370&0\\Properties",
+        "value_name": "LastArrivalDate",
+        "value_data": "2024-02-20T22:21:55Z"
+      }
+    ],
+    "auth_logs": [
+      {
+        "timestamp": "2024-02-20T22:03:45Z",
+        "event_type": "logon_success",
+        "username": "CORP\\jdoe",
+        "source_ip": "10.0.2.88",
+        "logon_type": 3,
+        "target_server": "fileserver.corp.local",
+        "resource": "\\\\fileserver\\HR\\employee_records"
+      },
+      {
+        "timestamp": "2024-02-20T22:07:12Z",
+        "event_type": "logon_success",
+        "username": "CORP\\jdoe",
+        "source_ip": "10.0.2.88",
+        "logon_type": 3,
+        "target_server": "fileserver.corp.local",
+        "resource": "\\\\fileserver\\Finance\\Q4_reports"
+      },
+      {
+        "timestamp": "2024-02-20T21:55:01Z",
+        "event_type": "logon_success",
+        "username": "CORP\\jdoe",
+        "source_ip": "73.162.45.201",
+        "logon_type": 10,
+        "target_server": "vpn.corpnet.com",
+        "resource": "VPN_RemoteAccess"
+      },
+      {
+        "timestamp": "2024-02-20T22:00:30Z",
+        "event_type": "badge_access",
+        "username": "CORP\\jdoe",
+        "source_ip": "",
+        "logon_type": 0,
+        "target_server": "badge-reader-floor3",
+        "resource": "Building_A_Floor3_MainEntrance"
+      }
+    ]
+  }
+}

