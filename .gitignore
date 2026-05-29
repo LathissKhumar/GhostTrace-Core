@@ -1,0 +1,6 @@
+venv/
+__pycache__/
+*.pyc
+.env
+.DS_Store
+create_git_history.sh
