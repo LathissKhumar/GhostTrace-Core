@@ -30,6 +30,10 @@ from config import settings
 from graph import async_stream_graph
 from llm_client import LLM_PROVIDER, get_model_name
 from logging_config import log_event, setup_logging
+from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.requests import Request as StarletteRequest
+from starlette.responses import JSONResponse as StarletteJSONResponse
+
 from middleware import RateLimitMiddleware, RequestIDMiddleware, TimingMiddleware
 from mcp_tools.server import load_evidence
 from parsers import auto_detect_and_parse, list_supported_formats, validate_evidence
@@ -138,6 +142,50 @@ def _list_all_cases() -> list[dict]:
 
 
 # ---------------------------------------------------------------------------
+# API Key Authentication Middleware
+# ---------------------------------------------------------------------------
+
+
+class APIKeyMiddleware(BaseHTTPMiddleware):
+    """Simple API key authentication middleware.
+
+    Checks for X-API-Key header or ?api_key= query parameter.
+    If GHOSTTRACE_API_KEY env var is not set, auth is bypassed (dev mode).
+    Skips auth for /health, /docs, /openapi.json, and static /evidence paths.
+    """
+
+    SKIP_PATHS = {"/health", "/docs", "/openapi.json", "/redoc"}
+
+    async def dispatch(self, request: StarletteRequest, call_next):
+        import os
+
+        api_key = os.environ.get("GHOSTTRACE_API_KEY")
+
+        # No key configured = dev mode, skip auth
+        if not api_key:
+            return await call_next(request)
+
+        # Skip auth for certain paths
+        path = request.url.path
+        if path in self.SKIP_PATHS or path.startswith("/evidence"):
+            return await call_next(request)
+
+        # Check header first, then query param
+        provided_key = request.headers.get("X-API-Key") or request.query_params.get("api_key")
+
+        if not provided_key or provided_key != api_key:
+            return StarletteJSONResponse(
+                status_code=401,
+                content={
+                    "error": "unauthorized",
+                    "detail": "Missing or invalid API key. Provide via X-API-Key header or ?api_key= query parameter.",
+                },
+            )
+
+        return await call_next(request)
+
+
+# ---------------------------------------------------------------------------
 # Lifespan: startup / shutdown
 # ---------------------------------------------------------------------------
 @asynccontextmanager
@@ -192,6 +240,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.add_middleware(APIKeyMiddleware)
 
 # Custom middleware (outermost first)
 app.add_middleware(TimingMiddleware)
@@ -719,7 +769,6 @@ async def get_benchmark_demo(scenario: str | None = None) -> dict:
     try:
         result = runner.get_demo_results(scenario)
     except FileNotFoundError:
-        available = list(BenchmarkRunner().get_demo_results().get("results", {}).keys()) if False else []
         raise HTTPException(
             status_code=404,
             detail=f"No pre-computed results for scenario '{scenario}'",

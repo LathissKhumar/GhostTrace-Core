@@ -9,9 +9,8 @@ receiving the shared GhostTraceState and returning updated state fields.
 """
 
 import json
-import os
 
-from llm_client import call_llm
+from llm_client import acall_llm as call_llm
 from state import AttackerOutput, GhostTraceState
 from utils.json_parser import safe_parse_json
 
@@ -97,7 +96,7 @@ async def attacker_node(state: GhostTraceState) -> dict:
             f"EVIDENCE BUNDLE:\n{evidence_str}"
         )
 
-        raw_text = call_llm(
+        raw_text = await call_llm(
             system_prompt=ATTACKER_SYSTEM_PROMPT,
             user_message=user_message,
             max_tokens=2000,

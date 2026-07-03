@@ -10,7 +10,6 @@ LangGraph StateGraph as the second node in the pipeline.
 """
 
 import json
-import os
 
 from llm_client import acall_llm
 from state import GhostTraceState, SkepticOutput

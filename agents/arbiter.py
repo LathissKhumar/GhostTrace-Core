@@ -6,9 +6,8 @@ incident response report suitable for executive presentation.
 """
 
 import json
-import os
 
-from llm_client import call_llm
+from llm_client import acall_llm as call_llm
 from state import ArbiterReportModel, GhostTraceState
 from utils import compute_overall_confidence, safe_parse_json
 
@@ -108,7 +107,7 @@ async def arbiter_node(state: GhostTraceState) -> dict:
         )
 
         # Call LLM (Ollama local by default, free)
-        raw_response = call_llm(
+        raw_response = await call_llm(
             system_prompt=ARBITER_SYSTEM_PROMPT,
             user_message=user_message,
             max_tokens=2000,
