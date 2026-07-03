@@ -2,5 +2,16 @@ venv/
 __pycache__/
 *.pyc
 .env
+.env.*
+!.env.example
 .DS_Store
 create_git_history.sh
+cases/
+.omo/
+.claude/
+AGENTS.md
+CLAUDE.md
+MITRE_ATTACK_INTEGRATION_REPORT.md
+DEPLOY.md
+.pytest_cache/
+*.egg-info/

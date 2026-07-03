@@ -15,87 +15,62 @@ Setup for Groq (recommended):
     4. That's it — run the backend
 """
 
-import os
 from openai import OpenAI, AsyncOpenAI
 
+from config import settings
 
-# Configuration via environment variables
-LLM_PROVIDER = os.environ.get("LLM_PROVIDER", "groq")  # "groq", "ollama", or "anthropic"
-GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")
-GROQ_MODEL = os.environ.get("GROQ_MODEL", "llama-3.3-70b-versatile")
+LLM_PROVIDER = settings.llm_provider
 GROQ_BASE_URL = "https://api.groq.com/openai/v1"
-
-OLLAMA_BASE_URL = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434/v1")
-OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "llama3.1:8b")
+ANTHROPIC_BASE_URL = "https://api.anthropic.com/v1/"
 
 
 def get_llm_client() -> OpenAI:
-    """Get a synchronous LLM client.
-
-    Returns an OpenAI-compatible client configured for the selected provider.
-    Default is Groq (free, fast cloud inference).
-
-    Returns:
-        OpenAI client instance.
-    """
+    """Get a synchronous LLM client for the configured provider."""
     if LLM_PROVIDER == "groq":
         return OpenAI(
             base_url=GROQ_BASE_URL,
-            api_key=GROQ_API_KEY,
+            api_key=settings.groq_api_key,
         )
 
     if LLM_PROVIDER == "anthropic":
         return OpenAI(
-            base_url="https://api.anthropic.com/v1/",
-            api_key=os.environ.get("ANTHROPIC_API_KEY", ""),
+            base_url=ANTHROPIC_BASE_URL,
+            api_key=settings.anthropic_api_key,
         )
 
-    # Ollama (free, local)
     return OpenAI(
-        base_url=OLLAMA_BASE_URL,
+        base_url=settings.ollama_base_url,
         api_key="ollama",
     )
 
 
 def get_async_llm_client() -> AsyncOpenAI:
-    """Get an async LLM client.
-
-    Returns an async OpenAI-compatible client configured for the selected provider.
-    Default is Groq (free, fast cloud inference).
-
-    Returns:
-        AsyncOpenAI client instance.
-    """
+    """Get an async LLM client for the configured provider."""
     if LLM_PROVIDER == "groq":
         return AsyncOpenAI(
             base_url=GROQ_BASE_URL,
-            api_key=GROQ_API_KEY,
+            api_key=settings.groq_api_key,
         )
 
     if LLM_PROVIDER == "anthropic":
         return AsyncOpenAI(
-            base_url="https://api.anthropic.com/v1/",
-            api_key=os.environ.get("ANTHROPIC_API_KEY", ""),
+            base_url=ANTHROPIC_BASE_URL,
+            api_key=settings.anthropic_api_key,
         )
 
-    # Ollama (free, local)
     return AsyncOpenAI(
-        base_url=OLLAMA_BASE_URL,
+        base_url=settings.ollama_base_url,
         api_key="ollama",
     )
 
 
 def get_model_name() -> str:
-    """Get the model name to use for LLM calls.
-
-    Returns:
-        Model identifier string for the configured provider.
-    """
+    """Get the model name for the configured provider."""
     if LLM_PROVIDER == "groq":
-        return GROQ_MODEL
+        return settings.groq_model
     if LLM_PROVIDER == "anthropic":
         return "claude-sonnet-4-20250514"
-    return OLLAMA_MODEL
+    return settings.ollama_model
 
 
 def call_llm(system_prompt: str, user_message: str, max_tokens: int = 2000) -> str:

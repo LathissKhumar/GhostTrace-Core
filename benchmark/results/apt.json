@@ -1,0 +1,37 @@
+{
+  "scenario": "apt",
+  "title": "APT Lateral Movement — Cozy Bear",
+  "single_agent": {
+    "claims": 9,
+    "confidence": 71,
+    "kill_chain_stages": 6,
+    "time_ms": 8100,
+    "per_agent": {
+      "attacker": 8100
+    }
+  },
+  "multi_agent": {
+    "claims": 9,
+    "disputed": 4,
+    "confidence": 76,
+    "kill_chain_stages": 8,
+    "time_ms": 25100,
+    "per_agent": {
+      "attacker": 8500,
+      "skeptic": 8300,
+      "arbiter": 8300
+    }
+  },
+  "improvement": {
+    "confidence_delta": "+5%",
+    "coverage_delta": "+2 stages",
+    "hallucinations_caught": 3,
+    "hallucination_details": [
+      "OVERRULED: Golden Ticket forged TGT — Kerberos event logs (4769) not present in evidence bundle, cannot confirm ticket forgery",
+      "NEEDS_MORE_EVIDENCE: Data staging in C:\\Windows\\Temp — file_events show staging directory creation but no .cab archive creation event",
+      "OVERRULED: NTDS.dit extraction — no evidence of volume shadow copy abuse or direct AD database access"
+    ]
+  },
+  "model": "llama-3.3-70b-versatile",
+  "timestamp": "2026-07-02T18:00:00Z"
+}

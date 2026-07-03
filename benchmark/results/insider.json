@@ -1,0 +1,36 @@
+{
+  "scenario": "insider",
+  "title": "Insider Threat — Data Exfiltration",
+  "single_agent": {
+    "claims": 7,
+    "confidence": 68,
+    "kill_chain_stages": 4,
+    "time_ms": 6200,
+    "per_agent": {
+      "attacker": 6200
+    }
+  },
+  "multi_agent": {
+    "claims": 7,
+    "disputed": 4,
+    "confidence": 58,
+    "kill_chain_stages": 6,
+    "time_ms": 19800,
+    "per_agent": {
+      "attacker": 6800,
+      "skeptic": 6500,
+      "arbiter": 6500
+    }
+  },
+  "improvement": {
+    "confidence_delta": "-10%",
+    "coverage_delta": "+2 stages",
+    "hallucinations_caught": 2,
+    "hallucination_details": [
+      "ALTERNATIVE_EXPLANATION: After-hours VPN access could indicate legitimate remote work — jdoe may have been authorized for overtime",
+      "OVERRULED: Registry persistence keys — no registry_changes artifact type present in the insider threat evidence bundle"
+    ]
+  },
+  "model": "llama-3.3-70b-versatile",
+  "timestamp": "2026-07-02T18:00:00Z"
+}

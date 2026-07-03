@@ -1,0 +1,9 @@
+[
+  {"EventID":1,"UtcTime":"2024-01-15T02:12:05Z","ProcessId":"2100","ParentProcessId":"1024","Image":"C:\\Program Files\\Microsoft Office\\root\\Office16\\WINWORD.EXE","CommandLine":"WINWORD.EXE /n Invoice.docm","User":"CORP\\jsmith","Hashes":"SHA256=abc123"},
+  {"EventID":1,"UtcTime":"2024-01-15T02:12:44Z","ProcessId":"4521","ParentProcessId":"2100","Image":"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe","CommandLine":"powershell.exe -NoP -NonI -W Hidden","User":"CORP\\jsmith","Hashes":"SHA256=def456"},
+  {"EventID":3,"UtcTime":"2024-01-15T02:12:50Z","ProcessId":"4521","Image":"powershell.exe","SourceIp":"10.0.1.45","DestinationIp":"185.220.101.34","DestinationPort":443,"Protocol":"HTTPS"},
+  {"EventID":11,"UtcTime":"2024-01-15T02:14:10Z","ProcessId":"4521","Image":"powershell.exe","TargetFilename":"C:\\ProgramData\\svchost32.exe","User":"CORP\\jsmith"},
+  {"EventID":13,"UtcTime":"2024-01-15T02:14:45Z","ProcessId":"4521","Image":"powershell.exe","TargetObject":"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\\WindowsUpdate","Details":"C:\\ProgramData\\svchost32.exe","User":"CORP\\jsmith"},
+  {"EventID":1,"UtcTime":"2024-01-15T02:14:55Z","ProcessId":"5890","ParentProcessId":"4521","Image":"C:\\ProgramData\\svchost32.exe","CommandLine":"C:\\ProgramData\\svchost32.exe --encrypt","User":"CORP\\jsmith","Hashes":"SHA256=ghi789"},
+  {"EventID":3,"UtcTime":"2024-01-15T02:15:05Z","ProcessId":"5890","Image":"svchost32.exe","SourceIp":"10.0.1.45","DestinationIp":"20.190.159.2","DestinationPort":443,"Protocol":"HTTPS"}
+]

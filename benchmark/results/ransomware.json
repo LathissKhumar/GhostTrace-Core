@@ -1,0 +1,37 @@
+{
+  "scenario": "ransomware",
+  "title": "Ransomware Attack — LockBit 3.0",
+  "single_agent": {
+    "claims": 8,
+    "confidence": 74,
+    "kill_chain_stages": 5,
+    "time_ms": 7850,
+    "per_agent": {
+      "attacker": 7850
+    }
+  },
+  "multi_agent": {
+    "claims": 8,
+    "disputed": 3,
+    "confidence": 82,
+    "kill_chain_stages": 7,
+    "time_ms": 23400,
+    "per_agent": {
+      "attacker": 8200,
+      "skeptic": 7900,
+      "arbiter": 7300
+    }
+  },
+  "improvement": {
+    "confidence_delta": "+8%",
+    "coverage_delta": "+2 stages",
+    "hallucinations_caught": 3,
+    "hallucination_details": [
+      "OVERRULED: Lateral movement via PsExec to FILE-SVR01 — no corresponding network connection or SMB authentication event found in evidence",
+      "OVERRULED: DNS exfiltration to external server — DNS queries show only normal resolution patterns, no tunneling indicators",
+      "OVERRULED: Credential dumping via Mimikatz — process tree shows svchost32.exe, not mimikatz or renamed variant"
+    ]
+  },
+  "model": "llama-3.3-70b-versatile",
+  "timestamp": "2026-07-02T18:00:00Z"
+}

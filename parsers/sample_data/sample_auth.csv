@@ -1,0 +1,11 @@
+timestamp,event_id,user,src_ip,logon_type,status,description
+2024-01-15T02:10:00Z,4624,svc_backup,10.0.5.200,3,0,Successful logon
+2024-01-15T02:10:15Z,4624,jsmith,10.0.1.45,2,0,Interactive logon
+2024-01-15T02:11:30Z,4625,admin,10.0.1.99,3,5,Failed logon - bad password
+2024-01-15T02:12:00Z,4648,jsmith,10.0.1.45,2,0,Credential used with explicit credentials
+2024-01-15T02:13:00Z,4672,SYSTEM,,0,0,Special privileges assigned
+2024-01-15T02:14:00Z,4624,svc_deploy,10.0.5.201,3,0,Successful network logon
+2024-01-15T02:15:00Z,4634,svc_backup,10.0.5.200,3,0,Logoff
+2024-01-15T02:16:00Z,4624,DOMAIN_ADMIN,10.0.0.5,3,0,Successful network logon
+2024-01-15T02:17:00Z,4625,svc_monitor,192.168.1.100,3,5,Failed logon - account locked
+2024-01-15T02:18:00Z,4624,jsmith,10.0.1.45,10,0,Remote interactive logon

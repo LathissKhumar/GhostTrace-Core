@@ -1,0 +1,10 @@
+Jan 15 02:10:00 dc01 sshd[12345]: Accepted password for jsmith from 10.0.1.45 port 49832 ssh2
+Jan 15 02:10:15 dc01 sudo: jsmith : TTY=pts/0 ; PWD=/home/jsmith ; USER=root ; COMMAND=/bin/cat /etc/shadow
+Jan 15 02:11:30 web01 nginx: 185.220.101.34 - - "GET /wp-admin HTTP/1.1" 403 199
+Jan 15 02:12:00 dc01 kernel: [UFW BLOCK] IN=eth0 SRC=10.0.1.99 DST=10.0.0.5 PROTO=TCP DPT=3389
+Jan 15 02:13:00 db01 postgres[6789]: LOG: connection authorized: user=app_service database=prod
+Jan 15 02:14:00 dc01 lsass: Credential Manager stored credentials updated for CORP\svc_backup
+Jan 15 02:15:00 file01 smbd[9012]: Accepted NTLM authentication for DOMAIN_ADMIN from 10.0.0.5
+Jan 15 02:16:00 dc01 WinRM[3456]: New WSMan session from 10.0.1.45 for user CORP\jsmith
+Jan 15 02:17:00 dc01 ADReplication: Replication request from 10.0.0.5 using DRSUAPI
+Jan 15 02:18:00 id01 falco: Unexpected outbound connection to 185.220.101.34:443 from process svchost32.exe
