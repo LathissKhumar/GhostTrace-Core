@@ -131,6 +131,36 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
         return await call_next(request)
 
 
+class SecurityHeadersMiddleware(BaseHTTPMiddleware):
+    """Injects standard security headers into every response.
+
+    Headers added:
+    - X-Content-Type-Options: nosniff (prevents MIME sniffing)
+    - X-Frame-Options: DENY (prevents clickjacking)
+    - Referrer-Policy: strict-origin-when-cross-origin
+    - Strict-Transport-Security: max-age=31536000; includeSubDomains (HSTS)
+    - X-XSS-Protection: 0 (modern browsers — rely on CSP instead)
+    - Permissions-Policy: camera=(), microphone=(), geolocation=()
+    """
+
+    def __init__(self, app: Any, *, hsts_max_age: int = 31536000) -> None:
+        super().__init__(app)
+        self._headers = {
+            "X-Content-Type-Options": "nosniff",
+            "X-Frame-Options": "DENY",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "Strict-Transport-Security": f"max-age={hsts_max_age}; includeSubDomains",
+            "X-XSS-Protection": "0",
+            "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
+        }
+
+    async def dispatch(self, request: Request, call_next: Callable[..., Any]) -> Response:
+        response = await call_next(request)
+        for key, value in self._headers.items():
+            response.headers[key] = value
+        return response
+
+
 class TimingMiddleware(BaseHTTPMiddleware):
     """Logs request method, path, status code, and duration."""
 

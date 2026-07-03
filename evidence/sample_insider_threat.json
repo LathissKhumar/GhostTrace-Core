@@ -66,7 +66,7 @@
       {
         "timestamp": "2024-02-20T21:55:00Z",
         "src_ip": "10.0.2.88",
-        "dst_ip": "198.51.100.10",
+        "dst_ip": "73.217.168.45",
         "dst_port": 443,
         "protocol": "HTTPS",
         "bytes_sent": 2048,
@@ -97,49 +97,49 @@
         "action": "read",
         "path": "\\\\fileserver\\HR\\employee_records\\salary_bands_2024.xlsx",
         "size_bytes": 2457600,
-        "hash_sha256": "a3f2b8c1d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1"
+        "hash_sha256": "fe76ecd50eb997796f983cd23b1369b92878a2f71b149a6cc62d3cb41d2a56e5"
       },
       {
         "timestamp": "2024-02-20T22:08:44Z",
         "action": "read",
         "path": "\\\\fileserver\\Finance\\Q4_reports\\revenue_forecast.pdf",
         "size_bytes": 5242880,
-        "hash_sha256": "b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3"
+        "hash_sha256": "9d20bf934c0b7c46f821369881bcdeac471cf442403eef6042de8642080d1ff4"
       },
       {
         "timestamp": "2024-02-20T22:10:22Z",
         "action": "read",
         "path": "\\\\fileserver\\Finance\\payroll_2024.xlsx",
         "size_bytes": 3145728,
-        "hash_sha256": "c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4"
+        "hash_sha256": "caa0584de5d449d595552865fed07c76352abbfc523861aef3bf70c4e0b3f547"
       },
       {
         "timestamp": "2024-02-20T22:19:30Z",
         "action": "create",
         "path": "C:\\Users\\jdoe\\Documents\\backup_20240220.7z",
         "size_bytes": 52428800,
-        "hash_sha256": "d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5"
+        "hash_sha256": "04d2453f8d73f8d2a579c70f2b6f3336ff7e0ce7f74695b2f0cb9bdd143cc22c"
       },
       {
         "timestamp": "2024-02-20T22:22:10Z",
         "action": "create",
         "path": "E:\\backup_20240220.7z",
         "size_bytes": 52428800,
-        "hash_sha256": "d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5"
+        "hash_sha256": "04d2453f8d73f8d2a579c70f2b6f3336ff7e0ce7f74695b2f0cb9bdd143cc22c"
       },
       {
         "timestamp": "2024-02-20T22:15:00Z",
         "action": "modify",
         "path": "C:\\Users\\jdoe\\Documents\\weekly_status_report.docx",
         "size_bytes": 45056,
-        "hash_sha256": "e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6"
+        "hash_sha256": "5d363455e571f3db5399d9e27c9f431265c546af4d411fc2ea832bc08483a5a3"
       },
       {
         "timestamp": "2024-02-20T22:18:50Z",
         "action": "create",
         "path": "C:\\Users\\jdoe\\AppData\\Local\\Temp\\7zS4F2A1.tmp",
         "size_bytes": 10485760,
-        "hash_sha256": "f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7"
+        "hash_sha256": "ee99b3a6a6b7003ae202afc532a44db5d9d48a79f90aafe80ccce9633797001a"
       }
     ],
     "registry_changes": [

@@ -97,7 +97,7 @@
       {
         "timestamp": "2024-03-10T03:25:00Z",
         "src_ip": "10.0.2.42",
-        "dst_ip": "198.51.100.77",
+        "dst_ip": "185.220.101.42",
         "dst_port": 443,
         "protocol": "HTTPS",
         "bytes_sent": 256,
@@ -108,7 +108,7 @@
       {
         "timestamp": "2024-03-10T03:25:59Z",
         "src_ip": "10.0.2.42",
-        "dst_ip": "198.51.100.77",
+        "dst_ip": "185.220.101.42",
         "dst_port": 443,
         "protocol": "HTTPS",
         "bytes_sent": 256,
@@ -134,7 +134,7 @@
         "action": "create",
         "path": "C:\\Users\\svc_deploy\\AppData\\Local\\Temp\\computers.json",
         "size_bytes": 1245000,
-        "hash_sha256": "a3f2b8c91d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a",
+        "hash_sha256": "d73d7a8ccc6b61e49fa366fb302346a6fea596d9121b9c0f2f78ccb2c31c9e37",
         "host": "WKS042.corp.acme.local"
       },
       {
@@ -150,7 +150,7 @@
         "action": "create",
         "path": "C:\\Windows\\PSEXESVC.exe",
         "size_bytes": 348160,
-        "hash_sha256": "e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8",
+        "hash_sha256": "81f551eb3d1b975af2e43ed1bb626e118105f63762af348a248e8eba1624d6ea",
         "host": "FILESRV01.corp.acme.local"
       },
       {
@@ -158,7 +158,7 @@
         "action": "create",
         "path": "C:\\Windows\\Temp\\debug.bin",
         "size_bytes": 58720256,
-        "hash_sha256": "c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6",
+        "hash_sha256": "d94449ba10bffa34627f73144759871aca650b5f9dbc302f54d5912e43bdeb2c",
         "host": "FILESRV01.corp.acme.local",
         "description": "LSASS memory dump output (56MB - consistent with credential extraction)"
       },
@@ -167,7 +167,7 @@
         "action": "modify",
         "path": "D:\\SharedDocs\\Q1-2024-Financial-Report.xlsx",
         "size_bytes": 2450000,
-        "hash_sha256": "f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+        "hash_sha256": "0391fcca9f50bbe7e624822ad75a287c996d5a4498e67f8a9aecfacc689f8bfb",
         "host": "FILESRV01.corp.acme.local",
         "description": "Legitimate file access by finance team member during scheduled batch process"
       }

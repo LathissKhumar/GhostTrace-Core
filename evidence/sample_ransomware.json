@@ -110,49 +110,49 @@
         "action": "open",
         "path": "C:\\Users\\jsmith\\AppData\\Local\\Microsoft\\Outlook\\Attachments\\Invoice_Q4_2024.docm",
         "size_bytes": 187392,
-        "hash_sha256": "a3f2b8c91d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a"
+        "hash_sha256": "87de4bdafe2e9b06cc49a959e392691594db9c409a26df2d7fabd9cbce5f84dd"
       },
       {
         "timestamp": "2024-01-15T02:13:02Z",
         "action": "create",
         "path": "C:\\Users\\jsmith\\AppData\\Local\\Temp\\~WRD4521.tmp",
         "size_bytes": 65536,
-        "hash_sha256": "b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3"
+        "hash_sha256": "9ea7d50964733fa9238067660c8cf779f7b7ff38a4dc21c197b15cd2b7536fcf"
       },
       {
         "timestamp": "2024-01-15T02:14:10Z",
         "action": "create",
         "path": "C:\\ProgramData\\svchost32.exe",
         "size_bytes": 245760,
-        "hash_sha256": "e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6"
+        "hash_sha256": "6de8356765aa495d8735fc940470c2125fadd3962fc0be9e6a88a6c89797b9e0"
       },
       {
         "timestamp": "2024-01-15T02:20:15Z",
         "action": "rename",
         "path": "C:\\Users\\jsmith\\Documents\\Financial_Report_2024.xlsx.LOCKED",
         "size_bytes": 2097152,
-        "hash_sha256": "f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7"
+        "hash_sha256": "cc8361b434fc61062cdc4f4a8ebbe09eb33bf06eb031787127c6cd5c965b78c9"
       },
       {
         "timestamp": "2024-01-15T02:20:16Z",
         "action": "rename",
         "path": "C:\\Users\\jsmith\\Documents\\Project_Roadmap.pptx.LOCKED",
         "size_bytes": 5242880,
-        "hash_sha256": "c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0"
+        "hash_sha256": "06052b7e2a1b61bfd36b8e088d76dce98a5ab2ef8d69cf7b7b59cbadcf99ece4"
       },
       {
         "timestamp": "2024-01-15T02:20:17Z",
         "action": "rename",
         "path": "C:\\Users\\jsmith\\Pictures\\Family_Vacation.jpg.LOCKED",
         "size_bytes": 3145728,
-        "hash_sha256": "d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1"
+        "hash_sha256": "c8b239adb67e84283e1728b8e8f8383ea0ae725f409f4c3cc9f93f2e807dbade"
       },
       {
         "timestamp": "2024-01-15T02:21:30Z",
         "action": "create",
         "path": "C:\\Users\\jsmith\\Desktop\\README_DECRYPT.txt",
         "size_bytes": 2048,
-        "hash_sha256": "a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0"
+        "hash_sha256": "935e8b15890bce6627a5d4b167256a59ab0b5c1194732f3499e2c3cc01f5a12b"
       }
     ],
     "registry_changes": [

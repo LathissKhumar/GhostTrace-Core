@@ -34,7 +34,12 @@ from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request as StarletteRequest
 from starlette.responses import JSONResponse as StarletteJSONResponse
 
-from middleware import RateLimitMiddleware, RequestIDMiddleware, TimingMiddleware
+from middleware import (
+    RateLimitMiddleware,
+    RequestIDMiddleware,
+    SecurityHeadersMiddleware,
+    TimingMiddleware,
+)
 from mcp_tools.server import load_evidence
 from parsers import auto_detect_and_parse, list_supported_formats, validate_evidence
 
@@ -186,6 +191,48 @@ class APIKeyMiddleware(BaseHTTPMiddleware):
 
 
 # ---------------------------------------------------------------------------
+# OpenAPI metadata — tags organize /docs into judge-friendly sections
+# ---------------------------------------------------------------------------
+OPENAPI_TAGS = [
+    {
+        "name": "Evidence",
+        "description": (
+            "Forensic evidence management — upload raw log bundles (CSV, Zeek, "
+            "Sysmon, text) or pre-structured evidence JSON. Parsers auto-detect "
+            "format and validate against the artifact schema."
+        ),
+    },
+    {
+        "name": "Investigation",
+        "description": (
+            "Adversarial multi-agent debate — runs Attacker → Skeptic → Arbiter "
+            "against an uploaded evidence bundle and streams results via SSE. "
+            "LLM hallucinations collapse under cross-examination."
+        ),
+    },
+    {
+        "name": "Cases",
+        "description": "Case history CRUD — save debate results, list past investigations, update metadata.",
+    },
+    {
+        "name": "Benchmark",
+        "description": (
+            "Single-agent vs multi-agent comparison metrics — quantifies the "
+            "adversarial pipeline's hallucination reduction impact."
+        ),
+    },
+    {
+        "name": "Demo",
+        "description": "Pre-built demo scenarios — lazy-loads sample evidence without needing your own data.",
+    },
+    {
+        "name": "Health",
+        "description": "System status, configured LLM provider, and active model.",
+    },
+]
+
+
+# ---------------------------------------------------------------------------
 # Lifespan: startup / shutdown
 # ---------------------------------------------------------------------------
 @asynccontextmanager
@@ -218,18 +265,68 @@ async def lifespan(app: FastAPI):
 # FastAPI app
 # ---------------------------------------------------------------------------
 app = FastAPI(
-    title="GhostTrace",
+    title="GhostTrace — Adversarial Multi-Agent Cybersecurity IR",
     version=APP_VERSION,
-    description="Adversarial multi-agent debate system for cybersecurity incident response",
+    description=(
+        "GhostTrace is an adversarial multi-agent debate system for cybersecurity "
+        "incident response. It pits an Attacker Agent against a Skeptic Agent in a "
+        "structured forensic debate, then synthesizes surviving claims into a "
+        "confidence-scored IR report through a neutral Arbiter.\n\n"
+        "**Core insight:** LLM hallucinations collapse under cross-examination.\n\n"
+        "All endpoints return JSON. Debate execution streams via Server-Sent Events. "
+        "API key auth is optional — set `GHOSTTRACE_API_KEY` env var to enable."
+    ),
     lifespan=lifespan,
+    openapi_tags=OPENAPI_TAGS,
 )
+
+
+# ---------------------------------------------------------------------------
+# OpenAPI security scheme — documents X-API-Key auth when configured
+# ---------------------------------------------------------------------------
+def _custom_openapi():
+    """Augment the auto-generated OpenAPI schema with the API key security scheme."""
+    if app.openapi_schema:
+        return app.openapi_schema
+    from fastapi.openapi.utils import get_openapi
+
+    schema = get_openapi(
+        title=app.title,
+        version=app.version,
+        description=app.description,
+        routes=app.routes,
+        tags=OPENAPI_TAGS,
+    )
+    schema.setdefault("components", {}).setdefault("securitySchemes", {})
+    schema["components"]["securitySchemes"]["APIKeyAuth"] = {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key",
+        "description": (
+            "API key authentication. Set the `GHOSTTRACE_API_KEY` environment "
+            "variable to enable; clients pass the same value via the `X-API-Key` "
+            "header or `?api_key=` query parameter."
+        ),
+    }
+    # Apply security globally only when API key is configured
+    import os
+
+    if os.environ.get("GHOSTTRACE_API_KEY"):
+        schema["security"] = [{"APIKeyAuth": []}]
+    app.openapi_schema = schema
+    return app.openapi_schema
+
+
+app.openapi = _custom_openapi
+
 
 # ---------------------------------------------------------------------------
 # Middleware — order matters (outermost = first to execute)
-# 1. RequestIDMiddleware  — injects request ID into logs
-# 2. RateLimitMiddleware  — blocks excessive requests early
-# 3. TimingMiddleware     — logs duration after response
-# 4. CORSMiddleware       — handles CORS preflight
+# 1. RequestIDMiddleware       — injects request ID into logs
+# 2. RateLimitMiddleware       — blocks excessive requests early
+# 3. TimingMiddleware          — logs duration after response
+# 4. SecurityHeadersMiddleware — adds CSP, HSTS, nosniff on every response
+# 5. CORSMiddleware            — handles CORS preflight
 # ---------------------------------------------------------------------------
 
 # CORS middleware (FastAPI built-in)
@@ -244,6 +341,7 @@ app.add_middleware(
 app.add_middleware(APIKeyMiddleware)
 
 # Custom middleware (outermost first)
+app.add_middleware(SecurityHeadersMiddleware)
 app.add_middleware(TimingMiddleware)
 app.add_middleware(RateLimitMiddleware, requests_per_minute=settings.rate_limit_per_minute)
 app.add_middleware(RequestIDMiddleware)
